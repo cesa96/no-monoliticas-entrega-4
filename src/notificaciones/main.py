@@ -16,19 +16,19 @@ class EventoIntegracion(Record):
     datacontenttype = String()
     service_name = String()
 
-class ReservaCreadaPayload(Record):
-    id_reserva = String()
+class ClienteCreadaPayload(Record):
+    id_cliente = String()
     id_cliente = String()
     estado = String()
     fecha_creacion = Long()
 
-class EventoReservaCreada(EventoIntegracion):
-    data = ReservaCreadaPayload()
+class EventoClienteCreada(EventoIntegracion):
+    data = ClienteCreadaPayload()
 
 HOSTNAME = os.getenv('PULSAR_ADDRESS', default="localhost")
 
 client = pulsar.Client(f'pulsar://{HOSTNAME}:6650')
-consumer = client.subscribe('eventos-reserva', consumer_type=_pulsar.ConsumerType.Shared, subscription_name='sub-notificacion-eventos-reservas', schema=AvroSchema(EventoReservaCreada))
+consumer = client.subscribe('eventos-cliente', consumer_type=_pulsar.ConsumerType.Shared, subscription_name='sub-notificacion-eventos-clientes', schema=AvroSchema(EventoClienteCreada))
 
 while True:
     msg = consumer.receive()

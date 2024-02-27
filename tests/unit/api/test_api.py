@@ -56,7 +56,7 @@ def test_servidor_levanta(client):
     assert response['status'] == 'up'
 
 
-def reserva_correcta():
+def cliente_correcta():
     return {
     "itinerarios": [
         {
@@ -101,6 +101,6 @@ def reserva_correcta():
     ]
 }
 
-def test_reservar_vuelo(client):
-    rv = client.post('/clientes/reserva', data=json.dumps(reserva_correcta()), content_type='application/json')
+def test_clienter_vuelo(client):
+    rv = client.post('/clientes/cliente', data=json.dumps(cliente_correcta()), content_type='application/json')
     assert rv is not None

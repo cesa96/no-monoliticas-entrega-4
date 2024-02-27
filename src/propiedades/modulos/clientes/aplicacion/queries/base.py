@@ -2,7 +2,7 @@ from propiedades.seedwork.aplicacion.queries import QueryHandler
 from propiedades.modulos.clientes.infraestructura.fabricas import FabricaRepositorio
 from propiedades.modulos.clientes.dominio.fabricas import Fabricaclientes
 
-class ReservaQueryBaseHandler(QueryHandler):
+class ClienteQueryBaseHandler(QueryHandler):
     def __init__(self):
         self._fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
         self._fabrica_clientes: Fabricaclientes = Fabricaclientes()

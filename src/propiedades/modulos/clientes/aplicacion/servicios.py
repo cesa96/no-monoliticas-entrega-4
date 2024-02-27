@@ -1,16 +1,16 @@
 from propiedades.seedwork.aplicacion.servicios import Servicio
-from propiedades.modulos.clientes.dominio.entidades import Reserva
+from propiedades.modulos.clientes.dominio.entidades import Cliente
 from propiedades.modulos.clientes.dominio.fabricas import Fabricaclientes
 from propiedades.modulos.clientes.infraestructura.fabricas import FabricaRepositorio
-from propiedades.modulos.clientes.infraestructura.repositorios import RepositorioReservas
+from propiedades.modulos.clientes.infraestructura.repositorios import RepositorioClientes
 from propiedades.seedwork.infraestructura.uow import UnidadTrabajoPuerto
-from .mapeadores import MapeadorReserva
+from .mapeadores import MapeadorCliente
 
-from .dto import ReservaDTO
+from .dto import ClienteDTO
 
 import asyncio
 
-class ServicioReserva(Servicio):
+class ServicioCliente(Servicio):
 
     def __init__(self):
         self._fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
@@ -24,19 +24,19 @@ class ServicioReserva(Servicio):
     def fabrica_clientes(self):
         return self._fabrica_clientes       
     
-    def crear_reserva(self, reserva_dto: ReservaDTO) -> ReservaDTO:
-        reserva: Reserva = self.fabrica_clientes.crear_objeto(reserva_dto, MapeadorReserva())
-        reserva.crear_reserva(reserva)
+    def crear_cliente(self, cliente_dto: ClienteDTO) -> ClienteDTO:
+        cliente: Cliente = self.fabrica_clientes.crear_objeto(cliente_dto, MapeadorCliente())
+        cliente.crear_cliente(cliente)
 
-        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)
+        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioClientes.__class__)
 
-        UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, reserva)
+        UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, cliente)
         UnidadTrabajoPuerto.savepoint()
         UnidadTrabajoPuerto.commit()
 
-        return self.fabrica_clientes.crear_objeto(reserva, MapeadorReserva())
+        return self.fabrica_clientes.crear_objeto(cliente, MapeadorCliente())
 
-    def obtener_reserva_por_id(self, id) -> ReservaDTO:
-        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)
-        return self.fabrica_clientes.crear_objeto(repositorio.obtener_por_id(id), MapeadorReserva())
+    def obtener_cliente_por_id(self, id) -> ClienteDTO:
+        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioClientes.__class__)
+        return self.fabrica_clientes.crear_objeto(repositorio.obtener_por_id(id), MapeadorCliente())
 

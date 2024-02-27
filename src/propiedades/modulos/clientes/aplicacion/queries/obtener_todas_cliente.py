@@ -1,9 +1,9 @@
 from propiedades.seedwork.aplicacion.queries import Query, QueryHandler, ResultadoQuery
 
-class ObtenerTodasReservasPagadas(Query):
+class ObtenerTodasClientesPagadas(Query):
     ...
 
-class ObtenerTodasReservasHandler(QueryHandler):
+class ObtenerTodasClientesHandler(QueryHandler):
 
     def handle() -> ResultadoQuery:
         ...
